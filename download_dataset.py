@@ -39,7 +39,7 @@ def download_video(video_id, args):
         a flag that indicates whether there was an error during the downloading
     """
     try:
-           ydl_opts = {
+        ydl_opts = {
                 'format': 'best[height<={}][ext=mp4]/best[ext=mp4]/best[height<={}]/best'
                     .format(args.resolution, args.resolution),
                 'outtmpl': '{}/{}.%(ext)s'.format(args.video_dir, video_id),

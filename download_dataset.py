@@ -39,12 +39,14 @@ def download_video(video_id, args):
         a flag that indicates whether there was an error during the downloading
     """
     try:
-        ydl_opts = {
+           ydl_opts = {
                 'format': 'best[height<={}][ext=mp4]/best[ext=mp4]/best[height<={}]/best'
                     .format(args.resolution, args.resolution),
                 'outtmpl': '{}/{}.%(ext)s'.format(args.video_dir, video_id),
                 'quiet': True,
-                'no_warnings': True
+                'no_warnings': True,
+                'external_downloader': 'aria2c',
+                'external_downloader_args': ['-x', '16', '-s', '16', '-j', '16', '-k', '1M', '-x', '16', '-s', '16', '-j', '16', '-k', '1M', '--max-download-limit', '200M']  # limit download speed to 200 Mbit/s
             }
         ydl = yt_dlp.YoutubeDL(ydl_opts)
         video_url = video_id if 'http' not in video_id else 'https://www.youtube.com/watch?v={}'.format(video_id)
